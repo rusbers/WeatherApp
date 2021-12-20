@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html class="page" lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather app</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Work+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="page__body">
+  <h1 class="a11y-hidden">A simple weather application</h1>
+  <div class="container">
+    <div class="weather-content">
+      <form class="form" onsubmit="return false">
+        <label>
+          <span class="a11y-hidden">City name</span>
+          <input class="form__input" type="text" placeholder="City">
+        </label>
+        <button class="form__button" type="submit"><span class="a11y-hidden">Search</span></button>
+      </form>
+      <div class="weather-content__inner">
+        <div class="tabs">
+          <div class="triggers">
+            <a href="#tab-1" class="triggers__item triggers__item--active">Now</a>
+            <a href="#tab-2" class="triggers__item">Details</a>
+            <a href="#tab-3" class="triggers__item">Forecast</a>
+          </div>
+          <div class="tabs-content">
+            <div id="tab-1" class="tabs-content__item tabs-content__item--active now">
+              <div class="degrees"></div>
+              <div class="weather-icon"></div>
+              <div class="city"><span class="city__name"></span><button class="add-favorite"><span class="a11y-hidden">Push to add in favorite locations</span></button></div>
+            </div>
+            <div id="tab-2" class="tabs-content__item details">
+              <div class="details__city city__name">Aktobe</div>
+              <ul class="weather-list">
+                <li class="weather-list__item">Temperature: 14</li>
+                <li class="weather-list__item">Feels like: 10</li>
+                <li class="weather-list__item">Weather: Clouds</li>
+                <li class="weather-list__item">Sunrise: 03:21</li>
+                <li class="weather-list__item">Sunset: 18:54</li>
+              </ul>
+            </div>
+            <div id="tab-3" class="tabs-content__item scroll forecast">
+              <div class="city__name">Aktobe</div>
+              <ul class="forecast-list">
+                <li class="forecast-list__item">
+                  <div class="time">
+                    <span class="date">17 May</span>
+                    <span class="hour">12:00</span>
+                  </div>
+                  <div class="weather">
+                    <ul class="weather__values">
+                      <ul class="weather__item">
+                        Temperature: 13
+                      </ul>
+                      <ul class="weather__item">
+                        Feels like: 10
+                      </ul>
+                    </ul>
+                    <div class="status">
+                      <div class="status__name">Rain</div>
+                      <span class="status__icon"></span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="locations">
+          <p class="locations__title">Added Locations:</p>
+          <div class="locations__inner">
+            <div class="locations__content scroll">
+              <ul class="locations__list"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <template id="element-li">
+    <li class="locations__list-item"><a href="#"></a><button class="remove"></button></li>
+  </template>
+  <script src="js/main.js" type="module"></script>
+</body>
+
+</html>
