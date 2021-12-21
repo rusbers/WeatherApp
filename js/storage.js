@@ -1,7 +1,7 @@
-import { fillingNode } from "./view.js";
+import { fillingNode, showMeteoInfo } from "./view.js";
 
-function storageCurrentCity(city) {
-  localStorage.setItem('current city', city);
+function storageCurrentCity(data) {
+  localStorage.setItem('current city data', JSON.stringify(data));
 }
 
 function storageFavoriteCities(cities) {
@@ -10,6 +10,10 @@ function storageFavoriteCities(cities) {
 
 function getFavoriteCities() {
   return JSON.parse(localStorage.getItem('favorite cities'));
+}
+
+function getCurrentCityData() {
+  return JSON.parse(localStorage.getItem('current city data'))
 }
 
 function renderFavoriteCities() {
@@ -23,4 +27,13 @@ function renderFavoriteCities() {
   })
 }
 
-export {storageCurrentCity, storageFavoriteCities, renderFavoriteCities};
+function renderCurrentCity() {
+  const SHOW_DATA = getCurrentCityData();
+  const isDataEmpty = (SHOW_DATA === null);
+
+  if (isDataEmpty) return;
+
+  showMeteoInfo(SHOW_DATA);
+}
+
+export {storageCurrentCity, storageFavoriteCities, renderFavoriteCities, renderCurrentCity };

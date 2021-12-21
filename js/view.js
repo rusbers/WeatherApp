@@ -1,4 +1,4 @@
-import { FAVORITE_CITIES, meteoDataHandler } from "./main.js";
+import { favoriteCities, meteoDataHandler } from "./main.js";
 import { storageFavoriteCities } from "./storage.js";
 
 const UI_ELEMENTS = {
@@ -47,11 +47,18 @@ function fillingNode(city) {
 
 function removeLocation() {
   const CITY = this.parentElement;
-  const CITY_INDEX = FAVORITE_CITIES.indexOf(CITY.textContent, 0);
+  const CITY_INDEX = favoriteCities.indexOf(CITY.textContent, 0);
 
-  FAVORITE_CITIES.splice(CITY_INDEX, 1);
-  storageFavoriteCities(FAVORITE_CITIES);
+  favoriteCities.splice(CITY_INDEX, 1);
+  storageFavoriteCities(favoriteCities);
   CITY.remove();
 }
 
-export {UI_ELEMENTS, fillingNode};
+function showMeteoInfo(meteoData) {
+  UI_ELEMENTS.DEGREES_NOW.textContent = meteoData.DEGREE;
+  UI_ELEMENTS.DEGREES_NOW.classList.add('degrees--show');
+  UI_ELEMENTS.ICON_NOW.style.backgroundImage = meteoData.ICON_LINK;
+  UI_ELEMENTS.CITY_NAME.textContent = meteoData.CITY;
+}
+
+export {UI_ELEMENTS, fillingNode, showMeteoInfo};
