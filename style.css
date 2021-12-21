@@ -127,7 +127,7 @@ a {
   border-radius: 5px;
 }
 
-.degrees {
+.now .degrees {
   font-size: 70px;
   display: inline-flex;
   position: relative;
@@ -135,7 +135,7 @@ a {
   width: fit-content;
 }
 
-.degrees--show::after {
+.now .degrees--show::after {
   content: "";
   background-image: url('img/icons/degree-big.svg');
   width: 17px;
@@ -143,6 +143,21 @@ a {
   position: absolute;
   right: -15px;
   top: 10px;
+}
+
+.details .degrees {
+  position: relative;
+  display: inline-flex;
+}
+
+.details .degrees--show::after {
+  content: "";
+  background-image: url('img/icons/degree-small.svg');
+  width: 6px;
+  height: 6px;
+  position: absolute;
+  right: -7px;
+  top: 5px;
 }
 
 .city {
