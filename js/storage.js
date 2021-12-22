@@ -36,4 +36,4 @@ function getCurrentCityData() {
   return JSON.parse(localStorage.getItem('current city data'))
 }
 
-export {storageCurrentCity, storageFavoriteCities, renderFavoriteCities, renderCurrentCity };
+export {storageCurrentCity, storageFavoriteCities, renderFavoriteCities, renderCurrentCity, getFavoriteCities };

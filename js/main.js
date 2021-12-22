@@ -1,5 +1,5 @@
 import { UI, fillingNode, showMeteoInfo } from './view.js';
-import { storageCurrentCity, storageFavoriteCities, renderFavoriteCities, renderCurrentCity } from './storage.js';
+import { storageCurrentCity, storageFavoriteCities, renderFavoriteCities, renderCurrentCity, getFavoriteCities } from './storage.js';
 
 const favoriteCities = [];
 
@@ -20,12 +20,13 @@ function meteoDataHandler(getCityName) {
   fetch(FETCH_URL)
     .then((response) => response.json())
     .then(renderMeteoInfo)
-    .catch(() => alert("No such city has been found!"))
+    .catch(showError)
     .finally(UI.INPUT.form.reset());
 }
 
 function renderMeteoInfo(result) {
   const ICON = result.weather[0].icon;
+
   const SHOW_DATA = {
     DEGREE: Math.ceil(result.main.temp),
     ICON_LINK: `url(https://openweathermap.org/img/wn/${ICON}@2x.png`,
@@ -41,15 +42,38 @@ function renderMeteoInfo(result) {
 }
 
 function favoriteHandler() {
-  const FAVORITE_CITY = this.previousElementSibling.textContent;
+  const CURRENT_CITY = this.previousElementSibling.textContent;
 
-  fillingNode(FAVORITE_CITY);
-  favoriteCities.push(FAVORITE_CITY);
+  if (isFavorite(CURRENT_CITY)) return;
+
+  fillingNode(CURRENT_CITY);
+  favoriteCities.push(CURRENT_CITY);
   storageFavoriteCities(favoriteCities);
 }
 
 function getCityNameInput() {
   return UI.INPUT.value;
+}
+
+function isFavorite(city) {
+  const favoriteCities = getFavoriteCities();
+
+  if (!favoriteCities) return;
+
+  return favoriteCities.includes(city);
+}
+
+function showError() {
+  const PLACEHOLDER_TEXT = UI.INPUT.placeholder;
+  const PLACEHOLDER_ERROR = 'This city was not found in the database';
+  
+  UI.INPUT.classList.add('error');
+  UI.INPUT.placeholder = PLACEHOLDER_ERROR;
+
+  setTimeout(function() {
+    UI.INPUT.placeholder = PLACEHOLDER_TEXT;
+    UI.INPUT.classList.remove('error');
+  }, 2000);
 }
 
 export {favoriteCities, meteoDataHandler};

@@ -169,7 +169,6 @@ a {
 .weather-icon {
   width: 78px;
   height: 59px;
-  /* background-image: url("img/png/cloud.png"); */
   background-repeat: no-repeat;
   background-position: center;
   margin: auto;
@@ -184,6 +183,10 @@ a {
   width: 22px;
   height: 22px;
   cursor: pointer;
+}
+
+.add-favorite--active {
+  background-image: url("img/icons/favorite-added.svg");
 }
 
 .now {
@@ -326,4 +329,13 @@ a {
   background-image: url("img/icons/remove.svg");
   width: 18px;
   height: 18px;
+}
+
+.error {
+  outline-color: #ff3333;
+  border-color: #ff3333;
+}
+
+.error::placeholder {
+  color: #000;
 }

@@ -23,7 +23,9 @@ const UI = {
     WEATHER: document.querySelector('.detail-weather'),
     SUNRISE: document.querySelector('.detail-sunrise'),
     SUNSET: document.querySelector('.detail-sunset'),
-  }
+  },
+
+  FORECAST: {},
 }
 
 function tabsToggler(item) {
@@ -68,8 +70,10 @@ function removeLocation() {
 }
 
 function showMeteoInfo(meteoData) {
-  UI.DEGREES.forEach((item) => item.textContent = meteoData.DEGREE);
-  UI.DEGREES.forEach((item) => item.classList.add('degrees--show'));
+  UI.DEGREES.forEach((item) => {
+    item.textContent = meteoData.DEGREE;
+    item.classList.add('degrees--show');
+  });
   UI.CITY_NAME.forEach((item) => item.textContent = meteoData.CITY);
   UI.NOW.ICON.style.backgroundImage = meteoData.ICON_LINK;
   UI.DETAILS.FEELS_LIKE.textContent = meteoData.HOW_FEELS;
