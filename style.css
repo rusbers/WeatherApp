@@ -145,12 +145,14 @@ a {
   top: 10px;
 }
 
-.details .degrees {
+.details .degrees,
+.forecast .degrees {
   position: relative;
   display: inline-flex;
 }
 
-.details .degrees--show::after {
+.details .degrees--show::after,
+.forecast .degrees--show::after {
   content: "";
   background-image: url('img/icons/degree-small.svg');
   width: 6px;
@@ -204,32 +206,35 @@ a {
   font-size: 18px;
   padding: 8px;
   margin-top: 8px;
+  min-height: 120px;
 }
 
-.time {
+.forecast-time {
   display: flex;
   justify-content: space-between;
   margin-bottom: 35px;
 }
 
-.weather {
+.forecast-weather {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.status__name {
+.forecast-status {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
 }
 
-.status__name::after {
-  content: "";
+.forecast-status__icon {
   width: 31px;
   height: 31px;
   background-image: url("img/png/rain.png");
   background-repeat: no-repeat;
+  display: block;
+  background-position: center;
+  background-size: cover;
 }
 
 .details__city {

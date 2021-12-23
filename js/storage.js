@@ -1,4 +1,4 @@
-import { fillingNode, showMeteoInfo } from "./view.js";
+import { fillLiNode, showWeather } from "./view.js";
 
 function storageCurrentCity(currentCityData) {
   localStorage.setItem('current city data', JSON.stringify(currentCityData));
@@ -15,7 +15,7 @@ function renderFavoriteCities() {
 
   favoriteCitiesData.forEach((item) => {
     const CITY = item;
-    fillingNode(CITY)
+    fillLiNode(CITY)
   })
 }
 
@@ -25,7 +25,7 @@ function renderCurrentCity() {
 
   if (!isData) return;
 
-  showMeteoInfo(SHOW_DATA);
+  showWeather(SHOW_DATA);
 }
 
 function getFavoriteCities() {

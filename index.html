@@ -28,48 +28,27 @@
           <div class="triggers">
             <a href="#tab-1" class="triggers__item triggers__item--active">Now</a>
             <a href="#tab-2" class="triggers__item">Details</a>
-            <a href="#tab-3" class="triggers__item">Forecast</a>
+            <a href="#tab-3" id="forecast-btn" class="triggers__item">Forecast</a>
           </div>
           <div class="tabs-content">
             <div id="tab-1" class="tabs-content__item tabs-content__item--active now">
-              <div class="degrees"></div>
+              <div class="degrees degrees--weather"></div>
               <div class="weather-icon"></div>
               <div class="city"><span class="city__name"></span><button class="add-favorite"><span class="a11y-hidden">Push to add in favorite locations</span></button></div>
             </div>
             <div id="tab-2" class="tabs-content__item details">
-              <div class="details__city city__name">Aktobe</div>
+              <div class="details__city city__name"></div>
               <ul class="weather-list">
-                <li class="weather-list__item">Temperature: <span class="degrees"></span></li>
-                <li class="weather-list__item">Feels like: <span class="details-feel degrees"></span></li>
+                <li class="weather-list__item">Temperature: <span class="degrees degrees--weather"></span></li>
+                <li class="weather-list__item">Feels like: <span class="details-feel degrees degrees--weather"></span></li>
                 <li class="weather-list__item">Weather: <span class="detail-weather"></span></li>
                 <li class="weather-list__item">Sunrise: <span class="detail-sunrise"></span></li>
                 <li class="weather-list__item">Sunset: <span class="detail-sunset"></span></li>
               </ul>
             </div>
             <div id="tab-3" class="tabs-content__item scroll forecast">
-              <div class="city__name">Aktobe</div>
-              <ul class="forecast-list">
-                <li class="forecast-list__item">
-                  <div class="time">
-                    <span class="date">17 May</span>
-                    <span class="hour">12:00</span>
-                  </div>
-                  <div class="weather">
-                    <ul class="weather__values">
-                      <ul class="weather__item">
-                        Temperature: 13
-                      </ul>
-                      <ul class="weather__item">
-                        Feels like: 10
-                      </ul>
-                    </ul>
-                    <div class="status">
-                      <div class="status__name">Rain</div>
-                      <span class="status__icon"></span>
-                    </div>
-                  </div>
-                </li>
-              </ul>
+              <div class="forecast-city city__name"></div>
+              <ul class="forecast-list"></ul>
             </div>
           </div>
         </div>
@@ -84,8 +63,30 @@
       </div>
     </div>
   </div>
-  <template id="element-li">
+  <template id="element-favorite">
     <li class="locations__list-item"><a href="#"></a><button class="remove"></button></li>
+  </template>
+  <template id="element-forecast">
+    <li class="forecast-list__item">
+      <div class="forecast-time">
+        <span class="forecast-time__date"></span>
+        <span class="forecast-time__hour"></span>
+      </div>
+      <div class="forecast-weather">
+        <ul class="forecast-weather__list">
+          <ul class="weather__item">
+            <div>Temperature: <span class="forecast-weather__temperature degrees degrees--show"></span></div>
+          </ul>
+          <ul class="weather__item">
+            <div>Feels like: <span class="forecast-weather__feels-like degrees degrees--show"></span></div>
+          </ul>
+        </ul>
+        <div class="forecast-status">
+          <div class="forecast-status__name"></div>
+          <span class="forecast-status__icon"></span>
+        </div>
+      </div>
+    </li>
   </template>
   <script src="js/main.js" type="module"></script>
 </body>

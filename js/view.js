@@ -1,12 +1,17 @@
-import { favoriteCities, meteoDataHandler } from "./main.js";
+import { favoriteCities, weatherHandler } from "./main.js";
 import { storageFavoriteCities } from "./storage.js";
 
 const UI = {
   FORM: document.querySelector('.form'),
   INPUT: document.querySelector('.form__input'),
   LOCATIONS: document.querySelector('.locations__list'),
-  DEGREES: document.querySelectorAll('.degrees'),
+  DEGREES_WEATHER: document.querySelectorAll('.degrees--weather'),
   CITY_NAME: document.querySelectorAll('.city__name'),
+
+  NODES: {
+    FAVORITE_TEMPLATE: document.getElementById('element-favorite'),
+    FORECAST_TEMPLATE: document.getElementById('element-forecast'),
+  },
 
   TABS: {
     TRIGGERS: document.querySelectorAll('.triggers__item'),
@@ -25,7 +30,10 @@ const UI = {
     SUNSET: document.querySelector('.detail-sunset'),
   },
 
-  FORECAST: {},
+  FORECAST: {
+    BTN: document.getElementById('forecast-btn'),
+    LIST: document.querySelector('.forecast-list'),
+  },
 }
 
 function tabsToggler(item) {
@@ -44,12 +52,12 @@ function tabsToggler(item) {
 
 UI.TABS.TRIGGERS.forEach(tabsToggler);
 
-function createLiNode() {
-  return document.getElementById('element-li').content.cloneNode(true);
+function createNode(template) {
+  return template.content.cloneNode(true);
 }
 
-function fillingNode(city) {
-  const LI = createLiNode();
+function fillLiNode(city) {
+  const LI = createNode(UI.NODES.FAVORITE_TEMPLATE);
   const A = LI.querySelector('a');
   const REMOVE_BTN = LI.querySelector('.remove');
 
@@ -57,7 +65,7 @@ function fillingNode(city) {
   UI.LOCATIONS.append(LI);
 
   REMOVE_BTN.addEventListener('click', removeLocation);
-  A.addEventListener('click', () => meteoDataHandler(() => city));
+  A.addEventListener('click', () => weatherHandler(() => city));
 }
 
 function removeLocation() {
@@ -69,8 +77,8 @@ function removeLocation() {
   CITY.remove();
 }
 
-function showMeteoInfo(meteoData) {
-  UI.DEGREES.forEach((item) => {
+function showWeather(meteoData) {
+  UI.DEGREES_WEATHER.forEach((item) => {
     item.textContent = meteoData.DEGREE;
     item.classList.add('degrees--show');
   });
@@ -82,4 +90,12 @@ function showMeteoInfo(meteoData) {
   UI.DETAILS.SUNRISE.textContent = meteoData.SUNRISE_TIME;
 }
 
-export {UI, fillingNode, showMeteoInfo };
+function fillForecastNode(nodeElements, forecastData) {
+  nodeElements.TIME.textContent = forecastData.TIME;
+  nodeElements.TEMP.textContent = forecastData.DEGREE;
+  nodeElements.FEELS_LIKE.textContent = forecastData.HOW_FEELS;
+  nodeElements.WEATHER.textContent = forecastData.WEATHER;
+  nodeElements.ICON.style.backgroundImage = forecastData.ICON_LINK;
+}
+
+export {UI, fillLiNode, showWeather, createNode, fillForecastNode };
