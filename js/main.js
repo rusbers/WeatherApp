@@ -24,6 +24,7 @@ function weatherHandler(getCityName) {
   fetch(FETCH_URL)
     .then((response) => response.json())
     .then(renderMeteoInfo)
+    .then(forecastHandler)
     .catch(showError)
     .finally(UI.INPUT.form.reset());
 }
@@ -46,7 +47,7 @@ function renderMeteoInfo(result) {
 function favoriteHandler() {
   const CURRENT_CITY = this.previousElementSibling.textContent;
 
-  if (isFavorite(CURRENT_CITY)) return;
+  if (isFavorite(CURRENT_CITY) || !CURRENT_CITY) return;
 
   fillLiNode(CURRENT_CITY);
   favoriteCities.push(CURRENT_CITY);
@@ -81,18 +82,17 @@ function showError() {
 UI.FORECAST.BTN.addEventListener('click', forecastHandler);
 
 function forecastHandler() {
-  const CITY = document.querySelector('.forecast-city').textContent;
+  const CITY = document.querySelector('.city__name').textContent;
   const FETCH_URL = `${API.URL.FORECAST}?q=${CITY}&appid=${API.KEY}&units=metric`;
 
   fetch(FETCH_URL)
     .then(response => response.json())
     .then(renderForecast);
-  // console.log(CITY)
 }
 
 function renderForecast(result) {
   const FORECAST_ITEMS = result.list;
-
+  UI.FORECAST.LIST.innerHTML = '';
   FORECAST_ITEMS.forEach((item) => {
     const FORECAST_DATA = {
       TIME: item.dt,
@@ -117,4 +117,4 @@ function renderForecast(result) {
   })
 }
 
-export {favoriteCities, weatherHandler};
+export {favoriteCities, weatherHandler, forecastHandler};

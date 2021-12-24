@@ -1,4 +1,4 @@
-import { favoriteCities, weatherHandler } from "./main.js";
+import { favoriteCities, weatherHandler, forecastHandler } from "./main.js";
 import { storageFavoriteCities } from "./storage.js";
 
 const UI = {
@@ -66,6 +66,7 @@ function fillLiNode(city) {
 
   REMOVE_BTN.addEventListener('click', removeLocation);
   A.addEventListener('click', () => weatherHandler(() => city));
+  A.addEventListener('click', forecastHandler);
 }
 
 function removeLocation() {
