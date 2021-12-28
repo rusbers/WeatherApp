@@ -17,16 +17,21 @@ renderCurrentCity();
 UI.FORM.addEventListener('submit', () => weatherHandler(getCityNameInput));
 UI.NOW.ADD_FAVORITE_BTN.addEventListener('click', favoriteHandler);
 
-function weatherHandler(getCityName) {
+async function weatherHandler(getCityName) {
   const CITY = getCityName();
   const FETCH_URL = `${API.URL.WEATHER}?q=${CITY}&appid=${API.KEY}&units=metric`;
 
-  fetch(FETCH_URL)
-    .then((response) => response.json())
-    .then(renderMeteoInfo)
-    .then(forecastHandler)
-    .catch(showError)
-    .finally(UI.INPUT.form.reset());
+  const fetchUrl = await fetch(FETCH_URL);
+  try {
+    const response = await fetchUrl.json();
+    renderMeteoInfo(response);
+  } catch {
+    showError();
+  } finally {
+    UI.INPUT.form.reset()
+  }
+
+  forecastHandler()
 }
 
 function renderMeteoInfo(result) {
@@ -81,13 +86,13 @@ function showError() {
 
 UI.FORECAST.BTN.addEventListener('click', forecastHandler);
 
-function forecastHandler() {
+async function forecastHandler() {
   const CITY = document.querySelector('.city__name').textContent;
   const FETCH_URL = `${API.URL.FORECAST}?q=${CITY}&appid=${API.KEY}&units=metric`;
 
-  fetch(FETCH_URL)
-    .then(response => response.json())
-    .then(renderForecast);
+  const fetchUrl = await fetch(FETCH_URL);
+  const response = await fetchUrl.json();
+  renderForecast(response);
 }
 
 function renderForecast(result) {
