@@ -16,7 +16,7 @@
   <h1 class="a11y-hidden">A simple weather application</h1>
   <div class="container">
     <div class="weather-content">
-      <form class="form" onsubmit="return false">
+      <form class="form" id="form" onsubmit="return false">
         <label>
           <span class="a11y-hidden">City name</span>
           <input class="form__input" type="text" placeholder="City">
@@ -28,7 +28,7 @@
           <div class="triggers">
             <a href="#tab-1" class="triggers__item triggers__item--active">Now</a>
             <a href="#tab-2" class="triggers__item">Details</a>
-            <a href="#tab-3" id="forecast-btn" class="triggers__item">Forecast</a>
+            <a href="#tab-3" class="triggers__item">Forecast</a>
           </div>
           <div class="tabs-content">
             <div id="tab-1" class="tabs-content__item tabs-content__item--active now">

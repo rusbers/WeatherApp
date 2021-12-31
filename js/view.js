@@ -1,12 +1,12 @@
-import { favoriteCities, weatherHandler, forecastHandler } from "./main.js";
-import { storageFavoriteCities } from "./storage.js";
+import { createFavoriteCityNode } from "./favorite.js";
 
 const UI = {
   FORM: document.querySelector('.form'),
   INPUT: document.querySelector('.form__input'),
-  LOCATIONS: document.querySelector('.locations__list'),
+  FAVORITE_LIST: document.querySelector('.locations__list'),
   DEGREES_WEATHER: document.querySelectorAll('.degrees--weather'),
   CITY_NAME: document.querySelectorAll('.city__name'),
+  CURRENT_CITY_NAME: document.querySelector('.city__name'),
 
   NODES: {
     FAVORITE_TEMPLATE: document.getElementById('element-favorite'),
@@ -36,15 +36,15 @@ const UI = {
   },
 }
 
-function tabsToggler(item) {
-  item.addEventListener('click', (event) => {
+function tabsToggler(currentTab) {
+  currentTab.addEventListener('click', event => {
     event.preventDefault();
     const id = event.target.getAttribute('href').replace('#', '');
 
-    UI.TABS.TRIGGERS.forEach(child => child.classList.remove('triggers__item--active'));
-    UI.TABS.CONTENT.forEach(child => child.classList.remove('tabs-content__item--active'));
-    
-    item.classList.add('triggers__item--active');
+    UI.TABS.TRIGGERS.forEach(tab => tab.classList.remove('triggers__item--active'));
+    UI.TABS.CONTENT.forEach(tab => tab.classList.remove('tabs-content__item--active'));
+
+    currentTab.classList.add('triggers__item--active');
 
     document.getElementById(id).classList.add('tabs-content__item--active');
   })
@@ -56,47 +56,30 @@ function createNode(template) {
   return template.content.cloneNode(true);
 }
 
-function fillLiNode(city) {
-  const LI = createNode(UI.NODES.FAVORITE_TEMPLATE);
-  const A = LI.querySelector('a');
-  const REMOVE_BTN = LI.querySelector('.remove');
-
-  A.textContent = city;
-  UI.LOCATIONS.append(LI);
-
-  REMOVE_BTN.addEventListener('click', removeLocation);
-  A.addEventListener('click', () => weatherHandler(() => city));
-  A.addEventListener('click', forecastHandler);
-}
-
-function removeLocation() {
-  const CITY = this.parentElement;
-  const CITY_INDEX = favoriteCities.indexOf(CITY.textContent, 0);
-
-  favoriteCities.splice(CITY_INDEX, 1);
-  storageFavoriteCities(favoriteCities);
-  CITY.remove();
-}
-
-function showWeather(meteoData) {
+function showWeather(weatherData) {
   UI.DEGREES_WEATHER.forEach((item) => {
-    item.textContent = meteoData.DEGREE;
+    item.textContent = weatherData.DEGREE;
     item.classList.add('degrees--show');
   });
-  UI.CITY_NAME.forEach((item) => item.textContent = meteoData.CITY);
-  UI.NOW.ICON.style.backgroundImage = meteoData.ICON_LINK;
-  UI.DETAILS.FEELS_LIKE.textContent = meteoData.HOW_FEELS;
-  UI.DETAILS.WEATHER.textContent = meteoData.WEATHER;
-  UI.DETAILS.SUNSET.textContent = meteoData.SUNSET_TIME;
-  UI.DETAILS.SUNRISE.textContent = meteoData.SUNRISE_TIME;
+  UI.CITY_NAME.forEach((item) => item.textContent = weatherData.CITY);
+  UI.NOW.ICON.style.backgroundImage = weatherData.ICON_LINK;
+  UI.DETAILS.FEELS_LIKE.textContent = weatherData.HOW_FEELS;
+  UI.DETAILS.WEATHER.textContent = weatherData.WEATHER;
+  UI.DETAILS.SUNSET.textContent = weatherData.SUNSET_TIME;
+  UI.DETAILS.SUNRISE.textContent = weatherData.SUNRISE_TIME;
 }
 
-function fillForecastNode(nodeElements, forecastData) {
-  nodeElements.TIME.textContent = forecastData.TIME;
-  nodeElements.TEMP.textContent = forecastData.DEGREE;
-  nodeElements.FEELS_LIKE.textContent = forecastData.HOW_FEELS;
-  nodeElements.WEATHER.textContent = forecastData.WEATHER;
-  nodeElements.ICON.style.backgroundImage = forecastData.ICON_LINK;
+function showError() {
+  const defaultPlaceholderText = 'City';
+  const errorPlaceholderText = 'This city was not found in the database';
+
+  UI.INPUT.classList.add('error');
+  UI.INPUT.placeholder = errorPlaceholderText;
+
+  setTimeout(function () {
+    UI.INPUT.placeholder = defaultPlaceholderText;
+    UI.INPUT.classList.remove('error');
+  }, 2000);
 }
 
-export {UI, fillLiNode, showWeather, createNode, fillForecastNode };
+export { UI, createNode, createFavoriteCityNode, showWeather, showError }

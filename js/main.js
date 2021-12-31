@@ -1,125 +1,40 @@
-import { UI, fillLiNode, showWeather, fillForecastNode, createNode } from './view.js';
-import { storageCurrentCity, storageFavoriteCities, renderFavoriteCities, renderCurrentCity, getFavoriteCities } from './storage.js';
-
-const favoriteCities = [];
-
-const API = {
-  URL: {
-    WEATHER: 'https://api.openweathermap.org/data/2.5/weather',
-    FORECAST: 'https://api.openweathermap.org/data/2.5/forecast',
-  },
-  KEY: 'f660a2fb1e4bad108d6160b7f58c555f',
-}
+import { API, getFetchUrl } from './api.js';
+import { UI, showError } from './view.js';
+import { renderFavoriteCities, renderCurrentCity, renderWeatherInfo } from './storage.js';
+import { renderForecast } from './forecast.js';
+import { favoriteCities, addFavoriteCityHandler } from './favorite.js';
+import { getCityName } from './helper.js';
 
 renderFavoriteCities();
 renderCurrentCity();
 
-UI.FORM.addEventListener('submit', () => weatherHandler(getCityNameInput));
-UI.NOW.ADD_FAVORITE_BTN.addEventListener('click', favoriteHandler);
+UI.FORM.addEventListener('submit', showWeatherHandler);
+UI.NOW.ADD_FAVORITE_BTN.addEventListener('click', addFavoriteCityHandler);
 
-async function weatherHandler(getCityName) {
-  const CITY = getCityName();
-  const FETCH_URL = `${API.URL.WEATHER}?q=${CITY}&appid=${API.KEY}&units=metric`;
+async function showWeatherHandler() {
+  const currentCity = getCityName(this);
+  const fetchUrl = getFetchUrl(API.URL.WEATHER, currentCity);
 
-  const fetchUrl = await fetch(FETCH_URL);
   try {
-    const response = await fetchUrl.json();
-    renderMeteoInfo(response);
+    const fetchWeatherData = await fetch(fetchUrl);
+    const weatherData = await fetchWeatherData.json();
+    renderWeatherInfo(weatherData);
   } catch {
     showError();
   } finally {
     UI.INPUT.form.reset()
   }
 
-  forecastHandler()
+  showForecast()
 }
 
-function renderMeteoInfo(result) {
-  const SHOW_DATA = {
-    DEGREE: Math.ceil(result.main.temp),
-    ICON_LINK: `url(https://openweathermap.org/img/wn/${result.weather[0].icon}@2x.png`,
-    CITY: result.name,
-    HOW_FEELS: Math.ceil(result.main.feels_like),
-    WEATHER: result.weather[0].main,
-    SUNSET_TIME: result.sys.sunset,
-    SUNRISE_TIME: result.sys.sunrise,
-  }
+async function showForecast() {
+  const currentCity = UI.CURRENT_CITY_NAME.textContent;
+  const fetchUrl = getFetchUrl(API.URL.FORECAST, currentCity);
 
-  storageCurrentCity(SHOW_DATA);
-  showWeather(SHOW_DATA);
+  const fetchForecastData = await fetch(fetchUrl);
+  const forecastData = await fetchForecastData.json();
+  renderForecast(forecastData);
 }
 
-function favoriteHandler() {
-  const CURRENT_CITY = this.previousElementSibling.textContent;
-
-  if (isFavorite(CURRENT_CITY) || !CURRENT_CITY) return;
-
-  fillLiNode(CURRENT_CITY);
-  favoriteCities.push(CURRENT_CITY);
-  storageFavoriteCities(favoriteCities);
-}
-
-function getCityNameInput() {
-  return UI.INPUT.value;
-}
-
-function isFavorite(city) {
-  const favoriteCities = getFavoriteCities();
-
-  if (!favoriteCities) return;
-
-  return favoriteCities.includes(city);
-}
-
-function showError() {
-  const PLACEHOLDER_TEXT = 'City';
-  const PLACEHOLDER_ERROR = 'This city was not found in the database';
-  
-  UI.INPUT.classList.add('error');
-  UI.INPUT.placeholder = PLACEHOLDER_ERROR;
-
-  setTimeout(function() {
-    UI.INPUT.placeholder = PLACEHOLDER_TEXT;
-    UI.INPUT.classList.remove('error');
-  }, 2000);
-}
-
-UI.FORECAST.BTN.addEventListener('click', forecastHandler);
-
-async function forecastHandler() {
-  const CITY = document.querySelector('.city__name').textContent;
-  const FETCH_URL = `${API.URL.FORECAST}?q=${CITY}&appid=${API.KEY}&units=metric`;
-
-  const fetchUrl = await fetch(FETCH_URL);
-  const response = await fetchUrl.json();
-  renderForecast(response);
-}
-
-function renderForecast(result) {
-  const FORECAST_ITEMS = result.list;
-  UI.FORECAST.LIST.innerHTML = '';
-  FORECAST_ITEMS.forEach((item) => {
-    const FORECAST_DATA = {
-      TIME: item.dt,
-      DEGREE: Math.ceil(item.main.temp),
-      ICON_LINK: `url(https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png)`,
-      HOW_FEELS: Math.ceil(item.main.feels_like),
-      WEATHER: item.weather[0].main,
-    }
-
-    const NODE = createNode(UI.NODES.FORECAST_TEMPLATE);
-    const NODE_ELEMENTS = {
-      TIME: NODE.querySelector('.forecast-time__date'),
-      TEMP: NODE.querySelector('.forecast-weather__temperature'),
-      FEELS_LIKE: NODE.querySelector('.forecast-weather__feels-like'),
-      WEATHER: NODE.querySelector('.forecast-status__name'),
-      ICON: NODE.querySelector('.forecast-status__icon'),
-    }
-
-    fillForecastNode(NODE_ELEMENTS, FORECAST_DATA);
-
-    UI.FORECAST.LIST.append(NODE);
-  })
-}
-
-export {favoriteCities, weatherHandler, forecastHandler};
+export { showWeatherHandler, showForecast, favoriteCities };

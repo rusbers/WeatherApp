@@ -1,4 +1,4 @@
-import { fillLiNode, showWeather } from "./view.js";
+import { createFavoriteCityNode, showWeather } from './view.js'; 
 
 function storageCurrentCity(currentCityData) {
   localStorage.setItem('current city data', JSON.stringify(currentCityData));
@@ -14,18 +14,18 @@ function renderFavoriteCities() {
   if (!favoriteCitiesData) return;
 
   favoriteCitiesData.forEach((item) => {
-    const CITY = item;
-    fillLiNode(CITY)
+    const city = item;
+    createFavoriteCityNode(city)
   })
 }
 
 function renderCurrentCity() {
-  const SHOW_DATA = getCurrentCityData();
-  const isData = (SHOW_DATA !== null);
+  const showData = getCurrentCityData();
+  const isData = (showData !== null);
 
   if (!isData) return;
 
-  showWeather(SHOW_DATA);
+  showWeather(showData);
 }
 
 function getFavoriteCities() {
@@ -36,4 +36,19 @@ function getCurrentCityData() {
   return JSON.parse(localStorage.getItem('current city data'))
 }
 
-export {storageCurrentCity, storageFavoriteCities, renderFavoriteCities, renderCurrentCity, getFavoriteCities };
+function renderWeatherInfo(weatherData) {
+  const showData = {
+    DEGREE: Math.ceil(weatherData.main.temp),
+    ICON_LINK: `url(https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`,
+    CITY: weatherData.name,
+    HOW_FEELS: Math.ceil(weatherData.main.feels_like),
+    WEATHER: weatherData.weather[0].main,
+    SUNSET_TIME: weatherData.sys.sunset,
+    SUNRISE_TIME: weatherData.sys.sunrise,
+  }
+
+  storageCurrentCity(showData);
+  showWeather(showData);
+}
+
+export { storageCurrentCity, storageFavoriteCities, renderFavoriteCities, renderCurrentCity, getFavoriteCities, renderWeatherInfo }
