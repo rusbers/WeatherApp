@@ -37,18 +37,19 @@ function getCurrentCityData() {
 }
 
 function renderWeatherInfo(weatherData) {
-  const showData = {
-    DEGREE: Math.ceil(weatherData.main.temp),
-    ICON_LINK: `url(https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`,
-    CITY: weatherData.name,
-    HOW_FEELS: Math.ceil(weatherData.main.feels_like),
-    WEATHER: weatherData.weather[0].main,
-    SUNSET_TIME: weatherData.sys.sunset,
-    SUNRISE_TIME: weatherData.sys.sunrise,
-  }
-
+  const showData = new WeatherInfo(weatherData)
   storageCurrentCity(showData);
   showWeather(showData);
+}
+
+function WeatherInfo(weatherData) {
+  this.DEGREE = Math.ceil(weatherData.main.temp);
+  this.ICON_LINK = `url(https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`;
+  this.CITY = weatherData.name;
+  this.HOW_FEELS = Math.ceil(weatherData.main.feels_like);
+  this.WEATHER = weatherData.weather[0].main;
+  this.SUNSET_TIME = weatherData.sys.sunset;
+  this.SUNRISE_TIME = weatherData.sys.sunrise;
 }
 
 export { storageCurrentCity, storageFavoriteCities, renderFavoriteCities, renderCurrentCity, getFavoriteCities, renderWeatherInfo }

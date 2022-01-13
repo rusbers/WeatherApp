@@ -6,33 +6,29 @@ function renderForecast(forecastData) {
   UI.FORECAST.LIST.innerHTML = '';
 
   forecastDays.forEach((forecastDay) => {
-    const forecastData = getForecastData(forecastDay);
+    const forecastData = new ForecastData(forecastDay);
     const forecastNode = createNode(UI.NODES.FORECAST_TEMPLATE);
-    const forecastNodeElements = getForecastNodeElements(forecastNode);
+    const forecastNodeElements = new ForecastNodeElements(forecastNode);
 
     fillForecastNode(forecastNodeElements, forecastData);
     UI.FORECAST.LIST.append(forecastNode);
   })
 }
 
-function getForecastData(forecastDay) {
-  return {
-    time: forecastDay.dt,
-    temperature: Math.ceil(forecastDay.main.temp),
-    feelsLike: Math.ceil(forecastDay.main.feels_like),
-    icon: `url(https://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png)`,
-    weather: forecastDay.weather[0].main,
-  }
+function ForecastData(forecastDay) {
+  this.time = forecastDay.dt;
+  this.temperature = Math.ceil(forecastDay.main.temp);
+  this.feelsLike = Math.ceil(forecastDay.main.feels_like);
+  this.icon = `url(https://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png)`;
+  this.weather = forecastDay.weather[0].main;
 }
 
-function getForecastNodeElements(forecastNode) {
-  return {
-    time: forecastNode.querySelector('.forecast-time__date'),
-    temperature: forecastNode.querySelector('.forecast-weather__temperature'),
-    feelsLike: forecastNode.querySelector('.forecast-weather__feels-like'),
-    icon: forecastNode.querySelector('.forecast-status__icon'),
-    weather: forecastNode.querySelector('.forecast-status__name'),
-  }
+function ForecastNodeElements(forecastNode) {
+  this.time = forecastNode.querySelector('.forecast-time__date');
+  this.temperature = forecastNode.querySelector('.forecast-weather__temperature');
+  this.feelsLike = forecastNode.querySelector('.forecast-weather__feels-like');
+  this.icon = forecastNode.querySelector('.forecast-status__icon');
+  this.weather = forecastNode.querySelector('.forecast-status__name');
 }
 
 function fillForecastNode(nodeElements, forecastData) {
