@@ -5,7 +5,7 @@ function storageCurrentCity(currentCityData) {
 }
 
 function storageFavoriteCities(cities) {
-  localStorage.setItem('favorite cities', JSON.stringify(cities));
+  localStorage.setItem('favorite cities', JSON.stringify([...cities]));
 }
 
 function renderFavoriteCities() {

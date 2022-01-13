@@ -1,16 +1,16 @@
 import { showWeatherHandler, showForecast } from './main.js';
-import { storageFavoriteCities, getFavoriteCities } from './storage.js';
+import { storageFavoriteCities } from './storage.js';
 import { UI, createNode } from './view.js';
 
-const favoriteCities = [];
+const favoriteCities = new Set();
 
 function addFavoriteCityHandler() {
   const cityName = this.previousElementSibling.textContent;
 
-  if (isCityFavorite(cityName) || !cityName) return;
+  if (favoriteCities.has(cityName) || !cityName) return;
 
   createFavoriteCityNode(cityName);
-  favoriteCities.push(cityName);
+  favoriteCities.add(cityName);
   storageFavoriteCities(favoriteCities);
 }
 
@@ -29,19 +29,10 @@ function createFavoriteCityNode(cityName) {
 
 function removeFavoriteCity() {
   const favoriteCity = this.parentElement;
-  const favoriteCityIndex = favoriteCities.indexOf(favoriteCity.textContent, 0);
 
-  favoriteCities.splice(favoriteCityIndex, 1); // FILTER?
+  favoriteCities.delete(favoriteCity.textContent)
   storageFavoriteCities(favoriteCities);
   favoriteCity.remove();
-}
-
-function isCityFavorite(city) {
-  const favoriteCities = getFavoriteCities();
-
-  if (!favoriteCities) return;
-
-  return favoriteCities.includes(city);
 }
 
 export { favoriteCities, createFavoriteCityNode, addFavoriteCityHandler }
