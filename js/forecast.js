@@ -1,4 +1,5 @@
 import { UI, createNode } from './view.js';
+import { getHour, getDayMonth } from './date.js';
 
 function renderForecast(forecastData) {
   const forecastDays = forecastData.list;
@@ -25,6 +26,7 @@ function ForecastData(forecastDay) {
 
 function ForecastNodeElements(forecastNode) {
   this.time = forecastNode.querySelector('.forecast-time__date');
+  this.hour = forecastNode.querySelector('.forecast-time__hour');
   this.temperature = forecastNode.querySelector('.forecast-weather__temperature');
   this.feelsLike = forecastNode.querySelector('.forecast-weather__feels-like');
   this.icon = forecastNode.querySelector('.forecast-status__icon');
@@ -32,7 +34,8 @@ function ForecastNodeElements(forecastNode) {
 }
 
 function fillForecastNode(nodeElements, forecastData) {
-  nodeElements.time.textContent = forecastData.time;
+  nodeElements.time.textContent = getDayMonth(forecastData.time);
+  nodeElements.hour.textContent = getHour(forecastData.time);
   nodeElements.temperature.textContent = forecastData.temperature;
   nodeElements.feelsLike.textContent = forecastData.feelsLike;
   nodeElements.weather.textContent = forecastData.weather;
