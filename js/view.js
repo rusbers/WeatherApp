@@ -59,15 +59,15 @@ function createNode(template) {
 
 function showWeather(weatherData) {
   UI.DEGREES_WEATHER.forEach((item) => {
-    item.textContent = weatherData.DEGREE;
+    item.textContent = weatherData.degree;
     item.classList.add('degrees--show');
   });
-  UI.CITY_NAME.forEach((item) => item.textContent = weatherData.CITY);
-  UI.NOW.ICON.style.backgroundImage = weatherData.ICON_LINK;
-  UI.DETAILS.FEELS_LIKE.textContent = weatherData.HOW_FEELS;
-  UI.DETAILS.WEATHER.textContent = weatherData.WEATHER;
-  UI.DETAILS.SUNSET.textContent = getHour(weatherData.SUNSET_TIME);
-  UI.DETAILS.SUNRISE.textContent = getHour(weatherData.SUNRISE_TIME);
+  UI.CITY_NAME.forEach((item) => item.textContent = weatherData.city);
+  UI.NOW.ICON.style.backgroundImage = weatherData.iconLink;
+  UI.DETAILS.FEELS_LIKE.textContent = weatherData.howFeels;
+  UI.DETAILS.WEATHER.textContent = weatherData.weather;
+  UI.DETAILS.SUNSET.textContent = getHour(weatherData.sunsetTime);
+  UI.DETAILS.SUNRISE.textContent = getHour(weatherData.sunriseTime);
 }
 
 function showError() {
