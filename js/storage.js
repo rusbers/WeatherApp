@@ -9,7 +9,7 @@ function storageFavoriteCities(cities) {
 }
 
 function renderFavoriteCities() {
-  const favoriteCitiesData = getFavoriteCities();
+  const favoriteCitiesData = Array.from(getFavoriteCities());
 
   if (!favoriteCitiesData) return;
 
@@ -38,7 +38,9 @@ function renderCurrentCity() {
 }
 
 function getFavoriteCities() {
-  return JSON.parse(localStorage.getItem('favorite cities'));
+  const favoriteCitiesList = JSON.parse(localStorage.getItem('favorite cities'));
+
+  return (favoriteCitiesList) ? new Set(favoriteCitiesList) : new Set();
 }
 
 function getCurrentCityData() {

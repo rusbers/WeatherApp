@@ -1,8 +1,8 @@
 import { showWeatherHandler, showForecast } from './main.js';
-import { storageFavoriteCities } from './storage.js';
+import { storageFavoriteCities, getFavoriteCities } from './storage.js';
 import { UI, createNode } from './view.js';
 
-const favoriteCities = new Set();
+const favoriteCities = getFavoriteCities();
 
 function addFavoriteCityHandler() {
   const cityName = this.previousElementSibling.textContent;
