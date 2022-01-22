@@ -13,14 +13,23 @@ function renderFavoriteCities() {
 
   if (!favoriteCitiesData) return;
 
-  favoriteCitiesData.forEach((item) => {
-    const city = item;
-    createFavoriteCityNode(city)
-  })
+  const lastFavoriteCityIndex = favoriteCitiesData.length - 1;
+
+  function createRenderingNode(cityIndex) {
+    const currentCityName = favoriteCitiesData[cityIndex];
+
+    if (cityIndex < 0) return;
+
+    createRenderingNode(cityIndex - 1);
+
+    createFavoriteCityNode(currentCityName);
+  } 
+
+  createRenderingNode(lastFavoriteCityIndex)
 }
 
 function renderCurrentCity() {
-  const showData = getCurrentCityData();
+  const showData = getCurrentCityData(); 
   const isData = (showData !== null);
 
   if (!isData) return;
