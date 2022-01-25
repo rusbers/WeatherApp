@@ -1,24 +1,11 @@
+import {format} from 'date-fns';
+
 function getHour(milliseconds) {
-  const time = new Date(milliseconds*1000);
-  const hour = addZero(time.getHours());
-  const minutes = addZero(time.getMinutes());
-  
-  return `${hour}:${minutes}`;
+  return format(new Date(milliseconds*1000), "HH:mm");
 }
 
 function getDayMonth(milliseconds) {
-  const time = new Date(milliseconds*1000);
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  const monthIndex = time.getMonth();
-
-  const month = months[monthIndex];
-  const day = time.getDate();
-
-  return `${day} ${month}`;
-}
-
-function addZero(time) {
-  return (time < 10) ? '0' + time : time;
+  return format(new Date(milliseconds*1000), 'dd LLLL');
 }
 
 export { getHour, getDayMonth }
