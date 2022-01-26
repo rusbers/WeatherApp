@@ -1,5 +1,5 @@
 import { UI, createNode } from './view.js';
-import { getHour, getDayMonth } from './date.js';
+import { getDate } from './date.js';
 
 function renderForecast(forecastData) {
   const forecastDays = forecastData.list;
@@ -34,8 +34,8 @@ function ForecastNodeElements(forecastNode) {
 }
 
 function fillForecastNode(nodeElements, forecastData) {
-  nodeElements.time.textContent = getDayMonth(forecastData.time);
-  nodeElements.hour.textContent = getHour(forecastData.time);
+  nodeElements.time.textContent = getDate.dayMonth(forecastData.time);
+  nodeElements.hour.textContent = getDate.hourMinutes(forecastData.time);
   nodeElements.temperature.textContent = forecastData.temperature;
   nodeElements.feelsLike.textContent = forecastData.feelsLike;
   nodeElements.weather.textContent = forecastData.weather;

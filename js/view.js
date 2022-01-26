@@ -1,5 +1,5 @@
 import { createFavoriteCityNode } from "./favorite.js";
-import { getHour } from './date.js'
+import { getDate } from './date.js'
 
 const UI = {
   FORM: document.querySelector('.form'),
@@ -66,8 +66,8 @@ function showWeather(weatherData) {
   UI.NOW.ICON.style.backgroundImage = weatherData.iconLink;
   UI.DETAILS.FEELS_LIKE.textContent = weatherData.howFeels;
   UI.DETAILS.WEATHER.textContent = weatherData.weather;
-  UI.DETAILS.SUNSET.textContent = getHour(weatherData.sunsetTime);
-  UI.DETAILS.SUNRISE.textContent = getHour(weatherData.sunriseTime);
+  UI.DETAILS.SUNSET.textContent = getDate.hourMinutes(weatherData.sunsetTime);
+  UI.DETAILS.SUNRISE.textContent = getDate.hourMinutes(weatherData.sunriseTime);
 }
 
 function showError() {
