@@ -1,5 +1,5 @@
-import { createFavoriteCityNode } from "./favorite.js";
-import { getDate } from './date.js'
+import { createFavoriteCityNode } from './favorite.js';
+import { getDate } from './date.js';
 
 const UI = {
   FORM: document.querySelector('.form'),
@@ -35,7 +35,7 @@ const UI = {
     BTN: document.getElementById('forecast-btn'),
     LIST: document.querySelector('.forecast-list'),
   },
-}
+};
 
 function tabsToggler(currentTab) {
   currentTab.addEventListener('click', event => {
@@ -48,7 +48,7 @@ function tabsToggler(currentTab) {
     currentTab.classList.add('triggers__item--active');
 
     document.getElementById(id).classList.add('tabs-content__item--active');
-  })
+  });
 }
 
 UI.TABS.TRIGGERS.forEach(tabsToggler);
@@ -83,4 +83,4 @@ function showError() {
   }, 2000);
 }
 
-export { UI, createNode, createFavoriteCityNode, showWeather, showError }
+export { UI, createNode, createFavoriteCityNode, showWeather, showError };

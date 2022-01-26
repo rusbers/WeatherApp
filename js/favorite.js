@@ -30,9 +30,9 @@ function createFavoriteCityNode(cityName) {
 function removeFavoriteCity() {
   const favoriteCity = this.parentElement;
 
-  favoriteCities.delete(favoriteCity.textContent)
+  favoriteCities.delete(favoriteCity.textContent);
   storageFavoriteCities(favoriteCities);
   favoriteCity.remove();
 }
 
-export { favoriteCities, createFavoriteCityNode, addFavoriteCityHandler }
+export { favoriteCities, createFavoriteCityNode, addFavoriteCityHandler };

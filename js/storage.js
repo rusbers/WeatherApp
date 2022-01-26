@@ -25,7 +25,7 @@ function renderFavoriteCities() {
     createFavoriteCityNode(currentCityName);
   } 
 
-  createRenderingNode(lastFavoriteCityIndex)
+  createRenderingNode(lastFavoriteCityIndex);
 }
 
 function renderCurrentCity() {
@@ -44,11 +44,11 @@ function getFavoriteCities() {
 }
 
 function getCurrentCityData() {
-  return JSON.parse(localStorage.getItem('current city data'))
+  return JSON.parse(localStorage.getItem('current city data'));
 }
 
 function renderWeatherInfo(weatherData) {
-  const showData = new WeatherInfo(weatherData)
+  const showData = new WeatherInfo(weatherData);
   storageCurrentCity(showData);
   showWeather(showData);
 }
@@ -63,4 +63,4 @@ function WeatherInfo(weatherData) {
   this.sunriseTime = weatherData.sys.sunrise;
 }
 
-export { storageCurrentCity, storageFavoriteCities, renderFavoriteCities, renderCurrentCity, getFavoriteCities, renderWeatherInfo }
+export { storageCurrentCity, storageFavoriteCities, renderFavoriteCities, renderCurrentCity, getFavoriteCities, renderWeatherInfo };

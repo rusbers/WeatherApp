@@ -22,10 +22,10 @@ async function showWeatherHandler() {
   } catch {
     showError();
   } finally {
-    UI.INPUT.form.reset()
+    UI.INPUT.form.reset();
   }
 
-  showForecast()
+  showForecast();
 }
 
 async function showForecast() {

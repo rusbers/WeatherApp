@@ -4,7 +4,7 @@ const API = {
     FORECAST: 'https://api.openweathermap.org/data/2.5/forecast',
   },
   KEY: 'f660a2fb1e4bad108d6160b7f58c555f',
-}
+};
 
 function getFetchUrl(api, currentCity) {
   const currentWeatherUrl = `${api}?q=${currentCity}&appid=${API.KEY}&units=metric`;

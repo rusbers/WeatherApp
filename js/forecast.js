@@ -13,7 +13,7 @@ function renderForecast(forecastData) {
 
     fillForecastNode(forecastNodeElements, forecastData);
     UI.FORECAST.LIST.append(forecastNode);
-  })
+  });
 }
 
 function ForecastData(forecastDay) {
