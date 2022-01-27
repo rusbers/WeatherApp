@@ -63,4 +63,4 @@ function WeatherInfo(weatherData) {
   this.sunriseTime = weatherData.sys.sunrise;
 }
 
-export { storageCurrentCity, storageFavoriteCities, renderFavoriteCities, renderCurrentCity, getFavoriteCities, renderWeatherInfo };
+export { storageFavoriteCities, renderFavoriteCities, renderCurrentCity, getFavoriteCities, renderWeatherInfo };
