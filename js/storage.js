@@ -1,7 +1,10 @@
 import { createFavoriteCityNode, showWeather } from './view.js'; 
+import Cookies from 'js-cookie';
 
 function storageCurrentCity(currentCityData) {
-  localStorage.setItem('current city data', JSON.stringify(currentCityData));
+  const oneHour = 1/24;
+
+  return Cookies.set('current city data', JSON.stringify(currentCityData), {expires: oneHour});
 }
 
 function storageFavoriteCities(cities) {
@@ -30,9 +33,8 @@ function renderFavoriteCities() {
 
 function renderCurrentCity() {
   const showData = getCurrentCityData(); 
-  const isData = (showData !== null);
 
-  if (!isData) return;
+  if (!showData) return;
 
   showWeather(showData);
 }
@@ -44,7 +46,11 @@ function getFavoriteCities() {
 }
 
 function getCurrentCityData() {
-  return JSON.parse(localStorage.getItem('current city data'));
+  const currentCity = Cookies.get('current city data');
+
+  if (!currentCity) return;
+
+  return JSON.parse(currentCity);
 }
 
 function renderWeatherInfo(weatherData) {
